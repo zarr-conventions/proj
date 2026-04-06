@@ -3,8 +3,8 @@
 - **UUID**: f17cb550-5864-4468-aeb7-f3180cfb622f
 - **Name**: proj:
 - **Namespace**: `proj:`
-- **Schema URL**: <https://raw.githubusercontent.com/zarr-experimental/geo-proj/refs/tags/v1/schema.json>
-- **Spec URL**: <https://github.com/zarr-experimental/geo-proj/blob/v1/README.md>
+- **Schema URL**: <https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json>
+- **Spec URL**: <https://github.com/zarr-conventions/geo-proj/blob/v1/README.md>
 - **Extension Maturity Classification**: Proposal
 - **Owner**: @emmanuelmathot, @maxrjones
 
@@ -49,8 +49,8 @@ The convention must be registered in `zarr_conventions`:
 {
   "zarr_conventions": [
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-experimental/geo-proj/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-experimental/geo-proj/blob/v1/README.md",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
       "name": "proj:",
       "description": "Coordinate reference system information for geospatial data"
@@ -162,8 +162,8 @@ The `proj:` convention defines only the coordinate reference system. For complet
   "attributes": {
     "zarr_conventions": [
       {
-        "schema_url": "https://raw.githubusercontent.com/zarr-experimental/geo-proj/refs/tags/v1/schema.json",
-        "spec_url": "https://github.com/zarr-experimental/geo-proj/blob/v1/README.md",
+        "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
+        "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
         "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
         "name": "proj:",
         "description": "Coordinate reference system information for geospatial data"
@@ -221,8 +221,8 @@ Example:
       "description": "Multiscale layout of zarr datasets"
     },
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-experimental/geo-proj/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-experimental/geo-proj/blob/v1/README.md",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
       "name": "proj:",
       "description": "Coordinate reference system information for geospatial data"
@@ -331,5 +331,5 @@ Without override capability, users would be forced to create separate groups for
 
 The template is based on the [STAC extensions template](https://github.com/stac-extensions/template/blob/main/README.md).
 
-The convention was copied and modified from  
+The convention was copied and modified from
 https://github.com/zarr-developers/zarr-extensions/pull/21 and [https://github.com/EOPF-Explorer/data-model/blob/main/attributes/geo/proj/](https://github.com/EOPF-Explorer/data-model/blob/main/attributes/geo/proj/).
