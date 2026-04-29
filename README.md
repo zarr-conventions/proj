@@ -5,7 +5,7 @@
 - **Namespace**: `proj:`
 - **Schema URL**: <https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json>
 - **Spec URL**: <https://github.com/zarr-conventions/geo-proj/blob/v1/README.md>
-- **Extension Maturity Classification**: Stable
+- **Extension Maturity Classification**: Proposal
 - **Owner**: @emmanuelmathot, @maxrjones
 
 
@@ -331,5 +331,5 @@ Without override capability, users would be forced to create separate groups for
 
 The template is based on the [STAC extensions template](https://github.com/stac-extensions/template/blob/main/README.md).
 
-The convention was copied and modified from  
+The convention was copied and modified from
 https://github.com/zarr-developers/zarr-extensions/pull/21 and [https://github.com/EOPF-Explorer/data-model/blob/main/attributes/geo/proj/](https://github.com/EOPF-Explorer/data-model/blob/main/attributes/geo/proj/).
