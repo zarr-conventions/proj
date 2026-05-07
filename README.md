@@ -174,7 +174,7 @@ guidance promotes interoperability across different client environments.
   [CF Conventions](https://cf-convention.github.io/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html#grid-mappings-and-projections):
   _"the onus is on data producers to ensure that their property values are consistent"_.
 - If a discrepancy between representations is detected, the `proj:wkt2` representation takes precedence. This indicates a data quality issue on the
-  writer's side. Readers SHOULD NOT attempt to resolve the conflict automatically; instead they SHOULD
+  writer's side. Readers SHOULD 
   surface the inconsistency and advise users to report it to the data provider.
 
 ## Examples
