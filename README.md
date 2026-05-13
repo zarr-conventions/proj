@@ -170,8 +170,7 @@ guidance promotes interoperability across different client environments.
   environment (e.g., `proj:code` for efficiency when a local CRS database is available; `proj:wkt2` or
   `proj:projjson` for self-contained resolution without an external database).
 - Readers are not required to validate consistency across representations. Writers bear responsibility
-  for providing equivalent alternatives, following the principle established by the
-  [CF Conventions](https://cf-convention.github.io/Data/cf-conventions/cf-conventions-1.13/cf-conventions.html#grid-mappings-and-projections):
+  for providing equivalent alternatives, following the principle established by the CF Conventions:
   _"the onus is on data producers to ensure that their property values are consistent"_.
 - If a discrepancy between representations is detected, the `proj:wkt2` representation takes precedence. This indicates a data quality issue on the
   writer's side. Readers SHOULD 
