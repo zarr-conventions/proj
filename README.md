@@ -1,7 +1,7 @@
 # Geospatial Projection Attribute Extension for Zarr
 
 - **UUID**: f17cb550-5864-4468-aeb7-f3180cfb622f
-- **Name**: proj:
+- **Name**: proj
 - **Namespace**: `proj:`
 - **Schema URL**: <https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json>
 - **Spec URL**: <https://github.com/zarr-conventions/geo-proj/blob/v1/README.md>
@@ -34,12 +34,12 @@ This convention focuses solely on CRS definitions. For spatial coordinate inform
 
 ## Inheritance Model
 
-The `geo-proj` convention follows a simple group-to-array inheritance model:
+The `proj` convention follows a simple group-to-array inheritance model:
 
 ### Inheritance Rules
 
-1. **Group-level definition** (recommended): When `geo-proj` convention is defined at the group level, it applies to all arrays that are direct children of that group. It does not apply to groups or arrays deeper in the hierarchy (e.g., grandchildren).
-2. **Array-level override**: An array can override the group's `geo-proj` convention with its own CRS definition.
+1. **Group-level definition** (recommended): When `proj` convention is defined at the group level, it applies to all arrays that are direct children of that group. It does not apply to groups or arrays deeper in the hierarchy (e.g., grandchildren).
+2. **Array-level override**: An array can override the group's `proj` convention with its own CRS definition.
 
 ## Convention Registration
 
@@ -52,7 +52,7 @@ The convention must be registered in `zarr_conventions`:
       "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
       "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
-      "name": "proj:",
+      "name": "proj",
       "description": "Coordinate reference system information for geospatial data"
     }
   ]
@@ -165,14 +165,14 @@ The `proj:` convention defines only the coordinate reference system. For complet
         "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
         "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
         "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
-        "name": "proj:",
+        "name": "proj",
         "description": "Coordinate reference system information for geospatial data"
       },
       {
         "schema_url": "https://raw.githubusercontent.com/zarr-conventions/spatial/refs/tags/v1/schema.json",
         "spec_url": "https://github.com/zarr-conventions/spatial/blob/v1/README.md",
         "uuid": "689b58e2-cf7b-45e0-9fff-9cfc0883d6b4",
-        "name": "spatial:",
+        "name": "spatial",
         "description": "Spatial coordinate information"
       }
     ],
@@ -224,14 +224,14 @@ Example:
       "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
       "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
-      "name": "proj:",
+      "name": "proj",
       "description": "Coordinate reference system information for geospatial data"
     },
     {
       "schema_url": "https://raw.githubusercontent.com/zarr-conventions/spatial/refs/tags/v1/schema.json",
       "spec_url": "https://github.com/zarr-conventions/spatial/blob/v1/README.md",
       "uuid": "689b58e2-cf7b-45e0-9fff-9cfc0883d6b4",
-      "name": "spatial:",
+      "name": "spatial",
       "description": "Spatial coordinate information"
     }
   ],
@@ -293,7 +293,7 @@ This separation provides several benefits:
 - **Tool interoperability**: Non-geospatial tools can use spatial coordinates without understanding CRS specifications
 - **Modular composition**: Each convention can evolve independently
 
-### Why does the "geo-proj" convention allow inheritance from a group to direct child arrays?
+### Why does the "proj" convention allow inheritance from a group to direct child arrays?
 
 The inheritance model addresses a fundamental pattern in geospatial data organization: multiple arrays (e.g., different bands, variables, or time steps) often share the same coordinate reference system. By defining `proj:` at the group level, users can:
 
@@ -304,7 +304,7 @@ The inheritance model addresses a fundamental pattern in geospatial data organiz
 
 This pattern is especially valuable for satellite imagery, climate models, and other geospatial datasets where dozens or hundreds of arrays share the same CRS.
 
-### Why does the "geo-proj" convention not support multi-level inheritance (e.g., from a group to grand-child arrays)?
+### Why does the "proj" convention not support multi-level inheritance (e.g., from a group to grand-child arrays)?
 
 Limiting inheritance to direct children keeps the convention simple and predictable:
 
@@ -314,10 +314,10 @@ Limiting inheritance to direct children keeps the convention simple and predicta
 4. **Implementation simplicity**: Parsers only need to check one level up, not traverse the entire hierarchy
 
 If nested groups need the same projection, users can either:
-- Define `geo:proj` at each group level where needed (e.g. multiscale datasets)
+- Define `proj` at each group level where needed (e.g. multiscale datasets)
 - Restructure their hierarchy to keep related arrays as direct children of a common parent
 
-### Why does the "geo-proj" convention support child arrays overriding parent group CRS definitions?
+### Why does the "proj" convention support child arrays overriding parent group CRS definitions?
 
 Array-level overrides provide necessary flexibility for real-world use cases:
 
