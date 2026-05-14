@@ -110,8 +110,6 @@ The `proj:code` field SHOULD be set to `null` or omitted in the following cases:
 - The data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid EPSG code for it. In this case, the CRS should be provided in `proj:wkt2` and/or `proj:projjson`.
 
-Clients can prefer to take either, although there may be discrepancies in how each might be interpreted.
-
 At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 #### proj:wkt2
@@ -148,6 +146,35 @@ This field SHOULD be set to `null` or omitted in the following cases:
 - A CRS exists, but there is no valid PROJJSON for it.
 
 At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
+
+## Recommendations
+
+The `proj:` convention allows one or more CRS representations to be present simultaneously. The following
+guidance promotes interoperability across different client environments.
+
+### For writers
+
+- SHOULD always include `proj:wkt2`, as it is a self-contained, lossless CRS representation that requires
+  no external database for resolution and is widely supported.
+- MAY include `proj:code` alongside `proj:wkt2` when a well-known authority code exists, to aid human
+  readability and to support clients that can resolve codes efficiently from a local database. Note that
+  resolving an authority code may require a network request or a local PROJ database, so it SHOULD NOT be
+  the only representation provided.
+- MAY additionally include `proj:projjson` for JSON-native consumers.
+- When multiple representations are provided, writers are responsible for ensuring that all
+  representations describe the same CRS. Inconsistent representations constitute a data quality error.
+
+### For readers
+
+- When multiple representations are present, readers may choose whichever representation best suits their
+  environment (e.g., `proj:code` for efficiency when a local CRS database is available; `proj:wkt2` or
+  `proj:projjson` for self-contained resolution without an external database).
+- Readers are not required to validate consistency across representations. Writers bear responsibility
+  for providing equivalent alternatives, following the principle established by the CF Conventions:
+  _"the onus is on data producers to ensure that their property values are consistent"_.
+- If a discrepancy between representations is detected, the `proj:wkt2` representation takes precedence. This indicates a data quality issue on the
+  writer's side. Readers SHOULD 
+  surface the inconsistency and advise users to report it to the data provider.
 
 ## Examples
 
