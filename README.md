@@ -3,8 +3,8 @@
 - **UUID**: f17cb550-5864-4468-aeb7-f3180cfb622f
 - **Name**: proj
 - **Namespace**: `proj:`
-- **Schema URL**: <https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json>
-- **Spec URL**: <https://github.com/zarr-conventions/geo-proj/blob/v1/README.md>
+- **Schema URL**: <https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json>
+- **Spec URL**: <https://github.com/zarr-conventions/proj/blob/v1/README.md>
 - **Extension Maturity Classification**: Proposal
 - **Owner**: @emmanuelmathot, @maxrjones
 
@@ -13,7 +13,7 @@
 
 This convention defines properties that encode datum and coordinate reference system (CRS) information for geospatial data. All properties use the `proj:` namespace prefix and are placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
 
-This convention focuses solely on CRS definitions. For spatial coordinate information (bounding box, transform, shape, dimensions), compose this convention with the [`spatial:` convention](https://github.com/zarr-conventions/spatial). This modular design enables:
+This convention focuses solely on CRS definitions. For spatial coordinate information (bounding box, transform, shape, dimensions), compose this convention with the [`spatial` convention](https://github.com/zarr-conventions/spatial). This modular design enables:
 
 - Use of CRS information independently for geospatial data
 - Composability with other conventions such as multiscales and spatial
@@ -49,8 +49,8 @@ The convention must be registered in `zarr_conventions`:
 {
   "zarr_conventions": [
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
       "name": "proj",
       "description": "Coordinate reference system information for geospatial data"
@@ -78,7 +78,7 @@ All properties use the `proj:` namespace prefix and are placed at the root `attr
 
 \* At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
-**Note**: For spatial coordinate information (bounding box, transform, shape, dimensions), use the [`spatial:` convention](https://github.com/zarr-conventions/spatial) in composition with this convention.
+**Note**: For spatial coordinate information (bounding box, transform, shape, dimensions), use the [`spatial` convention](https://github.com/zarr-conventions/spatial) in composition with this convention.
 
 
 ### Field Details
@@ -149,7 +149,7 @@ At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 ## Recommendations
 
-The `proj:` convention allows one or more CRS representations to be present simultaneously. The following
+The `proj` convention allows one or more CRS representations to be present simultaneously. The following
 guidance promotes interoperability across different client environments.
 
 ### For writers
@@ -180,7 +180,7 @@ guidance promotes interoperability across different client environments.
 
 ### Basic Usage
 
-The `proj:` convention defines only the coordinate reference system. For complete geospatial metadata, compose it with the [`spatial:` convention](https://github.com/zarr-conventions/spatial):
+The `proj` convention defines only the coordinate reference system. For complete geospatial metadata, compose it with the [`spatial` convention](https://github.com/zarr-conventions/spatial):
 
 ```json
 {
@@ -189,8 +189,8 @@ The `proj:` convention defines only the coordinate reference system. For complet
   "attributes": {
     "zarr_conventions": [
       {
-        "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
-        "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
+        "schema_url": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json",
+        "spec_url": "https://github.com/zarr-conventions/proj/blob/v1/README.md",
         "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
         "name": "proj",
         "description": "Coordinate reference system information for geospatial data"
@@ -231,7 +231,7 @@ See the following examples for different CRS specifications:
 
 ### Composability with Multiscales and Spatial
 
-The `proj:` convention can be composed with both `multiscales` and `spatial:` conventions. The CRS is typically defined once at the group level, while spatial coordinate properties vary per resolution level.
+The `proj` convention can be composed with both `multiscales` and `spatial` conventions. The CRS is typically defined once at the group level, while spatial coordinate properties vary per resolution level.
 
 **Important:** When `spatial:transform` is present at a resolution level, it represents the **complete affine transformation** for that level. The multiscales `scale` and `translation` properties are used for **array resampling relationships** between levels, not for geospatial coordinate transformations. `spatial:transform` should be treated as the authoritative geospatial transformation, independent of the multiscales resampling parameters.
 
@@ -248,8 +248,8 @@ Example:
       "description": "Multiscale layout of zarr datasets"
     },
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/geo-proj/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-conventions/geo-proj/blob/v1/README.md",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/proj/blob/v1/README.md",
       "uuid": "f17cb550-5864-4468-aeb7-f3180cfb622f",
       "name": "proj",
       "description": "Coordinate reference system information for geospatial data"
@@ -297,20 +297,20 @@ In this example:
 - The group-level `spatial:dimensions` and `spatial:bbox` apply to all resolution levels
 - Each layout item has its own `spatial:shape` and `spatial:transform` specific to that resolution
 - The multiscales convention defines the relative transformations between levels via the `transform` object
-- This separation keeps CRS information (`proj:`) independent from spatial coordinate information (`spatial:`)
+- This separation keeps CRS information (`proj`) independent from spatial coordinate information (`spatial`)
 
 See [examples/multiscales.json](examples/multiscales.json) for a complete composability example.
 
 ## FAQ
 
-### Why are proj: and spatial: separate conventions?
+### Why are `proj` and `spatial` separate conventions?
 
 As explained in the [rasterio documentation](https://rasterio.readthedocs.io/): "There are two parts to the georeferencing of raster datasets: the definition of the local, regional, or global system in which a raster's pixels are located; and the parameters by which pixel coordinates are transformed into coordinates in that system."
 
 This fundamental distinction motivated the design decision ([zarr-conventions issue #9](https://github.com/zarr-conventions/zarr-conventions/issues/9)) to separate these concerns into two conventions:
 
-1. **`proj:`** - Defines the coordinate reference system (CRS): the "local, regional, or global system" using EPSG codes, WKT2, or PROJJSON
-2. **`spatial:`** - Defines the coordinate transformation: the "parameters by which pixel coordinates are transformed" including transform matrices, bounding boxes, and dimension mappings
+1. **`proj`** - Defines the coordinate reference system (CRS): the "local, regional, or global system" using EPSG codes, WKT2, or PROJJSON
+2. **`spatial`** - Defines the coordinate transformation: the "parameters by which pixel coordinates are transformed" including transform matrices, bounding boxes, and dimension mappings
 
 This separation provides several benefits:
 
@@ -322,7 +322,7 @@ This separation provides several benefits:
 
 ### Why does the "proj" convention allow inheritance from a group to direct child arrays?
 
-The inheritance model addresses a fundamental pattern in geospatial data organization: multiple arrays (e.g., different bands, variables, or time steps) often share the same coordinate reference system. By defining `proj:` at the group level, users can:
+The inheritance model addresses a fundamental pattern in geospatial data organization: multiple arrays (e.g., different bands, variables, or time steps) often share the same coordinate reference system. By defining `proj` at the group level, users can:
 
 1. **Reduce redundancy**: Avoid duplicating identical CRS metadata across multiple arrays
 2. **Ensure consistency**: Guarantee that all related arrays use the same projection definition
