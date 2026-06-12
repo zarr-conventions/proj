@@ -84,7 +84,7 @@
         "proj:code": {
           "type": "string",
           "description": "CRS authority:code identifier (e.g., EPSG:4326, EPSG:32633)",
-          "pattern": "^[A-Z]+:[0-9]+$"
+          "pattern": "^[^:]+:[^:]+$"
         },
         "proj:wkt2": {
           "type": "string",
@@ -95,7 +95,7 @@
           "description": "PROJJSON CRS representation following PROJ specification"
         }
       },
-      "oneOf": [
+      "anyOf": [
         {
           "required": ["proj:code"]
         },
