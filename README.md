@@ -89,14 +89,15 @@ Additional properties are allowed.
 
 Authority:code identifier (e.g., EPSG:4326)
 
-* **Type**: `string | null`
+* **Type**: `string`
 * **Required**: No
-* **Pattern**: `^[A-Z]+:[0-9]+$`
+* **Pattern**: `^[^:]+:[^:]+$`
 
-Projection codes are identified by a string. The [proj](https://org/) library defines projections
+Projection codes are identified by a string. The [PROJ](https://proj.org/) library defines projections
 using "authority:code", e.g., "EPSG:4326" or "IAU_2015:30100". Different projection authorities may define
-different string formats. Examples of known projection authorities, where when can find well known codes that
-clients are likely to support are listed in the following table.
+different string formats, so the pattern only requires an authority and a code separated by a single colon.
+Examples of known projection authorities, where one can find well-known codes that
+clients are likely to support, are listed in the following table.
 
 | Authority Name                          | URL                                                        |
 | --------------------------------------- | ---------------------------------------------------------- |
@@ -105,7 +106,7 @@ clients are likely to support are listed in the following table.
 | Open Geospatial Consortium (OGC)        | <http://www.opengis.net/def/crs/OGC>                       |
 | ESRI                                    | <https://spatialreference.org/ref/esri/>                   |
 
-The `proj:code` field SHOULD be set to `null` or omitted in the following cases:
+The `proj:code` field SHOULD be omitted in the following cases:
 
 - The data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid EPSG code for it. In this case, the CRS should be provided in `proj:wkt2` and/or `proj:projjson`.
@@ -116,13 +117,13 @@ At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 WKT2 (ISO 19162) CRS representation
 
-* **Type**: `string | null`
+* **Type**: `string`
 * **Required**: No
 
 A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
 used by the asset data. This value is a [WKT2](http://docs.opengeospatial.org/is/12-063r5/12-063r5.html) string.
 
-This field SHOULD be set to `null` or omitted in the following cases:
+This field SHOULD be omitted in the following cases:
 
 - The asset data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid WKT2 string for it.
@@ -133,14 +134,14 @@ At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 PROJJSON CRS representation
 
-* **Type**: `object | null`
+* **Type**: `object`
 * **Required**: No
 
 A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
-used by the asset data. This value is a [PROJJSON](https://org/specifications/projjson.html) object,
-see the [JSON Schema](https://org/schemas/v0.7/projjson.schema.json) for details.
+used by the asset data. This value is a [PROJJSON](https://proj.org/en/stable/specifications/projjson.html) object,
+see the [JSON Schema](https://proj.org/schemas/v0.7/projjson.schema.json) for details.
 
-This field SHOULD be set to `null` or omitted in the following cases:
+This field SHOULD be omitted in the following cases:
 
 - The asset data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid PROJJSON for it.
