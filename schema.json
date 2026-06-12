@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json",
+  "$id": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v0.1/schema.json",
   "title": "Geospatial Projection Convention (proj)",
   "description": "Schema for geospatial coordinate reference system information in Zarr. Properties use the 'proj:' namespace prefix.",
   "type": "object",
@@ -39,12 +39,12 @@
       "properties": {
         "schema_url": {
           "type": "string",
-          "const": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v1/schema.json",
+          "const": "https://raw.githubusercontent.com/zarr-conventions/proj/refs/tags/v0.1/schema.json",
           "description": "URL to the JSON Schema definition for this convention"
         },
         "spec_url": {
           "type": "string",
-          "const": "https://github.com/zarr-conventions/proj/blob/v1/README.md",
+          "const": "https://github.com/zarr-conventions/proj/blob/v0.1/README.md",
           "description": "URL to the full specification document"
         },
         "uuid": {
