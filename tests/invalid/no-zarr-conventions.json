@@ -1,0 +1,19 @@
+{
+  "zarr_format": 3,
+  "node_type": "array",
+  "attributes": {
+    "proj:code": "EPSG:26711",
+    "spatial:dimensions": [
+      "Y",
+      "X"
+    ],
+    "spatial:transform": [
+      60.0,
+      0.0,
+      440720.0,
+      0.0,
+      -60.0,
+      3750120.0
+    ]
+  }
+}

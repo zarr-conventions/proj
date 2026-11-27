@@ -14,7 +14,8 @@ Maintainers: @emmanuelmathot, @maxrjones
 | `schema.json` | JSON Schema (Draft-07) for the convention's attributes. |
 | `examples/` | Example `zarr_conventions` metadata, all of which must validate. |
 | `validate.js` | AJV-based validator: `node validate.js <schema.json> <data.json>`. |
-| `test.js` | Validates every file in `examples/` against `schema.json`. |
+| `tests/invalid/` | Documents that must fail validation. |
+| `test.js` | Validates every file in `examples/` against `schema.json`, checks that every file in `tests/invalid/` fails, and checks that no schema constraint is next to a `$ref` (draft-07 ignores it). |
 
 ## Running validation locally
 
