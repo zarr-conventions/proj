@@ -109,9 +109,7 @@ clients are likely to support, are listed in the following table.
 The `proj:code` field SHOULD be omitted in the following cases:
 
 - The data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
-- A CRS exists, but there is no valid EPSG code for it. In this case, the CRS should be provided in `proj:wkt2` and/or `proj:projjson`.
-
-At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
+- A CRS exists, but there is no valid authority code for it. In this case, the CRS should be provided in `proj:wkt2` and/or `proj:projjson`.
 
 #### proj:wkt2
 
@@ -121,14 +119,12 @@ WKT2 (ISO 19162) CRS representation
 * **Required**: No
 
 A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
-used by the asset data. This value is a [WKT2](http://docs.opengeospatial.org/is/12-063r5/12-063r5.html) string.
+used by the data. This value is a [WKT2](http://docs.opengeospatial.org/is/12-063r5/12-063r5.html) string.
 
 This field SHOULD be omitted in the following cases:
 
-- The asset data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
+- The data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid WKT2 string for it.
-
-At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 #### proj:projjson
 
@@ -138,15 +134,13 @@ PROJJSON CRS representation
 * **Required**: No
 
 A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
-used by the asset data. This value is a [PROJJSON](https://proj.org/en/stable/specifications/projjson.html) object,
+used by the data. This value is a [PROJJSON](https://proj.org/en/stable/specifications/projjson.html) object,
 see the [JSON Schema](https://proj.org/schemas/v0.7/projjson.schema.json) for details.
 
 This field SHOULD be omitted in the following cases:
 
-- The asset data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
+- The data does not have a CRS, such as in the case of non-rectified imagery with Ground Control Points.
 - A CRS exists, but there is no valid PROJJSON for it.
-
-At least one of `proj:code`, `proj:wkt2`, or `proj:projjson` MUST be provided.
 
 ## Recommendations
 
