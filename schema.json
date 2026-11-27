@@ -27,7 +27,7 @@
         }
       },
       "required": ["zarr_conventions"],
-      "$ref": "#/$defs/projAttributes"
+      "allOf": [{ "$ref": "#/$defs/projAttributes" }]
     }
   },
   "required": ["zarr_format", "node_type", "attributes"],
