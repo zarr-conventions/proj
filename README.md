@@ -11,7 +11,7 @@
 
 ## Description
 
-This convention defines properties that encode datum and coordinate reference system (CRS) information for geospatial data. All properties use the `proj:` namespace prefix and are placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
+This convention defines properties that encode coordinate reference system (CRS) information for geospatial data. A CRS is a coordinate system that is related to an object, such as the Earth, by a datum (reference frame), as defined in [OGC Abstract Specification Topic 2: Referencing by coordinates](https://docs.ogc.org/as/18-005r4/18-005r4.html) (ISO 19111). All properties use the `proj:` namespace prefix and are placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
 
 This convention focuses solely on CRS definitions. For spatial coordinate information (bounding box, transform, shape, dimensions), compose this convention with the [`spatial` convention](https://github.com/zarr-conventions/spatial). This modular design enables:
 
@@ -72,7 +72,7 @@ All properties use the `proj:` namespace prefix and are placed at the root `attr
 
 |Property|Type|Description|Required|Reference|
 |---|---|---|---|---|
-|**proj:code**|`string`|Authority:code identifier (e.g., EPSG:4326)|Conditional*|[proj:code](#projcode)|
+|**proj:code**|`string`|CRS identifier in the form authority:code (e.g., EPSG:4326)|Conditional*|[proj:code](#projcode)|
 |**proj:wkt2**|`string`|WKT2 (ISO 19162) CRS representation|Conditional*|[proj:wkt2](#projwkt2)|
 |**proj:projjson**|`object`|PROJJSON CRS representation|Conditional*|[proj:projjson](#projprojjson)|
 
@@ -87,17 +87,17 @@ Additional properties are allowed.
 
 #### proj:code
 
-Authority:code identifier (e.g., EPSG:4326)
+CRS identifier in the form authority:code (e.g., EPSG:4326)
 
 * **Type**: `string`
 * **Required**: No
 * **Pattern**: `^[^:]+:[^:]+$`
 
-Projection codes are identified by a string. The [PROJ](https://proj.org/) library defines projections
-using "authority:code", e.g., "EPSG:4326" or "IAU_2015:30100". Different projection authorities may define
-different string formats, so the pattern only requires an authority and a code separated by a single colon.
-Examples of known projection authorities, where one can find well-known codes that
-clients are likely to support, are listed in the following table.
+A CRS identifier is a string in the form "authority:code", e.g., "EPSG:4326" or "IAU_2015:30100", as used by
+the [PROJ](https://proj.org/) library. The authority is the registry that defines the CRS, and the code identifies
+the CRS in that registry. Different authorities may define different string formats, so the pattern only requires
+an authority and a code separated by a single colon. Examples of known authorities, where one can find well-known
+codes that software is likely to support, are listed in the following table.
 
 | Authority Name                          | URL                                                        |
 | --------------------------------------- | ---------------------------------------------------------- |
@@ -118,8 +118,7 @@ WKT2 (ISO 19162) CRS representation
 * **Type**: `string`
 * **Required**: No
 
-A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
-used by the data. This value is a [WKT2](http://docs.opengeospatial.org/is/12-063r5/12-063r5.html) string.
+The CRS of the data, as a [WKT2](http://docs.opengeospatial.org/is/12-063r5/12-063r5.html) string.
 
 This field SHOULD be omitted in the following cases:
 
@@ -133,8 +132,7 @@ PROJJSON CRS representation
 * **Type**: `object`
 * **Required**: No
 
-A Coordinate Reference System (CRS) is the data reference system (sometimes called a 'projection')
-used by the data. This value is a [PROJJSON](https://proj.org/en/stable/specifications/projjson.html) object,
+The CRS of the data, as a [PROJJSON](https://proj.org/en/stable/specifications/projjson.html) object,
 see the [JSON Schema](https://proj.org/schemas/v0.7/projjson.schema.json) for details.
 
 This field SHOULD be omitted in the following cases:
@@ -145,14 +143,14 @@ This field SHOULD be omitted in the following cases:
 ## Recommendations
 
 The `proj` convention allows one or more CRS representations to be present simultaneously. The following
-guidance promotes interoperability across different client environments.
+guidance promotes interoperability across different software environments.
 
 ### For writers
 
 - SHOULD always include `proj:wkt2`, as it is a self-contained, lossless CRS representation that requires
   no external database for resolution and is widely supported.
 - MAY include `proj:code` alongside `proj:wkt2` when a well-known authority code exists, to aid human
-  readability and to support clients that can resolve codes efficiently from a local database. Note that
+  readability and to support readers that can resolve codes efficiently from a local database. Note that
   resolving an authority code may require a network request or a local PROJ database, so it SHOULD NOT be
   the only representation provided.
 - MAY additionally include `proj:projjson` for JSON-native consumers.
@@ -320,7 +318,7 @@ This separation provides several benefits:
 The inheritance model addresses a fundamental pattern in geospatial data organization: multiple arrays (e.g., different bands, variables, or time steps) often share the same coordinate reference system. By defining `proj` at the group level, users can:
 
 1. **Reduce redundancy**: Avoid duplicating identical CRS metadata across multiple arrays
-2. **Ensure consistency**: Guarantee that all related arrays use the same projection definition
+2. **Ensure consistency**: Guarantee that all related arrays use the same CRS definition
 3. **Simplify management**: Update CRS metadata in one location rather than across many arrays
 4. **Match common practice**: Align with how geospatial tools like GDAL organize multi-band rasters and how formats like NetCDF/HDF5 structure data
 
@@ -330,12 +328,12 @@ This pattern is especially valuable for satellite imagery, climate models, and o
 
 Limiting inheritance to direct children keeps the convention simple and predictable:
 
-1. **Clear scope**: Users can immediately understand which arrays inherit projection metadata by looking at the group's direct children
+1. **Clear scope**: Users can immediately understand which arrays inherit CRS metadata by looking at the group's direct children
 2. **Avoid ambiguity**: Multi-level inheritance would require complex rules for handling intermediate groups that may or may not define their own projections
 3. **Explicit organization**: Zarr hierarchies can be arbitrarily deep; limiting inheritance to one level encourages intentional data organization
 4. **Implementation simplicity**: Parsers only need to check one level up, not traverse the entire hierarchy
 
-If nested groups need the same projection, users can either:
+If nested groups need the same CRS, users can either:
 - Define `proj` at each group level where needed (e.g. multiscale datasets)
 - Restructure their hierarchy to keep related arrays as direct children of a common parent
 
